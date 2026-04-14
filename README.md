@@ -27,6 +27,8 @@ Chat multi-modelo, agentes autónomos, procesamiento de documentos, automatizaci
 - [Paneles de chat](#paneles-de-chat)
 - [Acceso remoto con Cloudflare Tunnel](#acceso-remoto-con-cloudflare-tunnel)
 - [Gestión de procesos con PM2](#gestión-de-procesos-con-pm2)
+- [Problemas conocidos y fixes](#problemas-conocidos-y-fixes)
+- [Troubleshooting](#troubleshooting)
 - [Contribuir](#contribuir)
 - [Licencia](#licencia)
 
@@ -415,13 +417,111 @@ pm2 restart all
 
 ---
 
+## Problemas conocidos y fixes
+
+### URLs de LM Studio hardcodeadas (resuelto)
+
+> **Issue:** [#1](https://github.com/neo44hd/synk-ia-public/issues/1) | **Severidad:** Alta | **Estado:** Resuelto
+
+**Problema:** Múltiples archivos tenían la URL de LM Studio (`localhost:12345`) hardcodeada. Al migrar a Ollama (`localhost:11434`), los servicios de IA fallaban con `ECONNREFUSED` porque seguían apuntando al puerto antiguo, ignorando `OLLAMA_URL`.
+
+**Archivos afectados:**
+
+| Archivo | Qué tenía mal |
+|---------|---------------|
+| `docker/docker-compose.yml` | `OPENAI_API_BASE_URL` apuntaba a `:12345` |
+| `docker/setup.sh` | Health check usaba `:12345` en vez de `$OLLAMA_URL` |
+| `scripts/start-litellm.sh` | `--api_base` fijo a `:12345` |
+| Docs (README, SOUL.md, etc.) | Referenciaban LM Studio como dependencia |
+
+**Solución:** Todas las URLs ahora leen de variables de entorno con fallback a Ollama:
+
+```javascript
+// Patrón correcto
+const OLLAMA_URL = process.env.OLLAMA_URL || 'http://localhost:11434';
+
+// Patrón incorrecto (nunca hardcodear)
+const LLM_URL = 'http://localhost:12345';
+```
+
+**Verificación:** `curl http://localhost:3001/api/health` debe devolver todos los servicios `ok`.
+
+**Lección:** Si migras de un LLM provider a otro, haz `grep -rn "puerto_antiguo"` para encontrar todas las referencias residuales.
+
+---
+
+## Troubleshooting
+
+### El servidor arranca pero el chat no responde
+
+```bash
+# 1. Verificar que Ollama está corriendo
+curl http://localhost:11434/api/tags
+
+# 2. Verificar que el modelo está descargado
+ollama list
+
+# 3. Comprobar health check completo
+curl http://localhost:3001/api/health | python3 -m json.tool
+```
+
+### `ECONNREFUSED` en los logs
+
+Significa que un servicio intenta conectar a un puerto cerrado. Comprueba:
+
+```bash
+# ¿Ollama corre en el puerto esperado?
+lsof -i :11434
+
+# ¿Las variables de entorno están bien?
+pm2 env <ID_PROCESO> | grep OLLAMA
+```
+
+### `posix_spawnp failed` al abrir el terminal
+
+El módulo `node-pty` necesita compilarse para tu plataforma:
+
+```bash
+npm install node-pty --build-from-source
+```
+
+### Docker no conecta con Ollama
+
+Ollama corre en el host, no en Docker. Los contenedores deben usar `host.docker.internal`:
+
+```yaml
+# docker-compose.yml
+environment:
+  - OPENAI_API_BASE_URL=http://host.docker.internal:11434/v1
+extra_hosts:
+  - "host.docker.internal:host-gateway"
+```
+
+### Cloudflare Tunnel no arranca
+
+Verifica el orden de los argumentos — `run` va antes del nombre:
+
+```bash
+# Correcto
+cloudflared tunnel run synkia
+
+# Incorrecto (da error de --config)
+cloudflared tunnel synkia run
+```
+
+---
+
 ## Contribuir
 
+Consulta [CONTRIBUTING.md](CONTRIBUTING.md) para la guía completa. En resumen:
+
 1. Haz fork del repositorio
-2. Crea tu rama: `git checkout -b feature/mi-mejora`
-3. Haz commit: `git commit -m 'feat: descripción de la mejora'`
-4. Push: `git push origin feature/mi-mejora`
-5. Abre un Pull Request
+2. Crea tu rama: `git checkout -b feat/mi-mejora`
+3. Haz commit siguiendo [Conventional Commits](https://www.conventionalcommits.org/es/): `git commit -m 'feat: descripción'`
+4. Push: `git push origin feat/mi-mejora`
+5. Abre un Pull Request con la [checklist del PR](CONTRIBUTING.md#checklist-del-pr)
+
+Para reportar bugs o proponer mejoras, usa las [plantillas de issues](https://github.com/neo44hd/synk-ia-public/issues/new/choose).
 
 ---
 

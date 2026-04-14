@@ -1,0 +1,140 @@
+name: "\U0001F41B Bug Report"
+description: "Reportar un error o comportamiento inesperado"
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Gracias por reportar este bug. Rellena la información necesaria para que podamos reproducirlo y solucionarlo.
+
+        **Antes de abrir este issue:**
+        - [ ] Busca en [issues existentes](https://github.com/neo44hd/synk-ia-public/issues) para evitar duplicados
+        - [ ] Comprueba que estás en la última versión: `git pull origin main`
+        - [ ] Verifica que Ollama está corriendo: `curl http://localhost:11434/api/tags`
+
+  - type: textarea
+    id: description
+    attributes:
+      label: "Descripción"
+      description: "Explicación breve del problema."
+      placeholder: "El chat devuelve un error 500 al enviar un mensaje con archivos de contexto adjuntos."
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: "Pasos para reproducir"
+      description: "Enumera los pasos exactos para reproducir el bug."
+      placeholder: |
+        1. Abrir http://localhost:3001/chat.html
+        2. Seleccionar la pestaña "Chat IA"
+        3. Adjuntar un archivo con el botón 📂
+        4. Enviar un mensaje
+        5. Aparece error en la respuesta
+      value: |
+        1. 
+        2. 
+        3. 
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: "Comportamiento esperado"
+      description: "¿Qué debería pasar?"
+      placeholder: "El chat debería responder con el contenido del archivo como contexto."
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: "Comportamiento actual"
+      description: "¿Qué pasa realmente?"
+      placeholder: "El servidor devuelve HTTP 500 y en los logs aparece 'ECONNREFUSED 127.0.0.1:11434'."
+    validations:
+      required: true
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: "Severidad"
+      description: "¿Cómo de grave es el problema?"
+      options:
+        - "🔴 Crítica — la plataforma no funciona"
+        - "🟠 Alta — una funcionalidad principal no va"
+        - "🟡 Media — funciona con workaround"
+        - "🟢 Baja — molestia menor / cosmético"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: component
+    attributes:
+      label: "Componente afectado"
+      description: "¿Qué parte de SYNK-IA falla?"
+      multiple: true
+      options:
+        - "Chat IA (qwen3.5)"
+        - "Brain (codegemma)"
+        - "OpenClaw (functiongemma)"
+        - "Aider"
+        - "Claude Code (proxy)"
+        - "Terminal web"
+        - "Gestión documental"
+        - "Trabajadores / RRHH"
+        - "Email IMAP"
+        - "Revo POS"
+        - "Biloop"
+        - "Docker (SearXNG / Qdrant / OpenWebUI / n8n)"
+        - "Cloudflare Tunnel"
+        - "PM2 / arranque"
+        - "Frontend (React / UI)"
+        - "Otro"
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: "Entorno"
+      description: "Información sobre tu sistema."
+      value: |
+        - **SO:** macOS / Linux (versión)
+        - **Node.js:** (salida de `node -v`)
+        - **Ollama:** (salida de `ollama --version`)
+        - **Navegador:** Chrome / Firefox / Safari (versión)
+        - **Docker:** (salida de `docker --version`)
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: "Logs relevantes"
+      description: "Pega logs del servidor, PM2 o consola del navegador."
+      placeholder: |
+        Salida de: pm2 logs sinkia-api --lines 20
+        O consola del navegador (F12 → Console)
+      render: shell
+    validations:
+      required: false
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: "Capturas de pantalla"
+      description: "Si aplica, arrastra capturas aquí."
+    validations:
+      required: false
+
+  - type: textarea
+    id: workaround
+    attributes:
+      label: "Workaround"
+      description: "Si encontraste una forma de evitar el bug, descríbela aquí."
+    validations:
+      required: false

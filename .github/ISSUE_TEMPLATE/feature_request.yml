@@ -1,0 +1,109 @@
+name: "\U0001F680 Feature Request"
+description: "Proponer una nueva funcionalidad o mejora"
+title: "[Feature] "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Gracias por proponer una mejora para SYNK-IA. Cuanto más contexto aportes, más fácil será evaluarla e implementarla.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: "Problema o necesidad"
+      description: "¿Qué problema resuelve esta funcionalidad? ¿Qué frustración elimina?"
+      placeholder: |
+        Cuando trabajo con el panel de Brain, no puedo ver qué archivos ha usado como contexto
+        para generar la respuesta. Esto dificulta verificar si la información es correcta.
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: "Solución propuesta"
+      description: "Describe cómo imaginas que funcionaría."
+      placeholder: |
+        Añadir un desplegable bajo cada respuesta del Brain que muestre:
+        - Nombre de los archivos consultados
+        - Fragmentos relevantes que usó como contexto
+        - Puntuación de relevancia de cada fragmento
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: "Alternativas consideradas"
+      description: "¿Has pensado en otras formas de resolver esto?"
+      placeholder: "También se podría añadir un panel lateral tipo 'Fuentes' como hace Perplexity, pero integrado en el chat."
+    validations:
+      required: false
+
+  - type: dropdown
+    id: component
+    attributes:
+      label: "Componente relacionado"
+      description: "¿A qué parte de SYNK-IA afecta?"
+      multiple: true
+      options:
+        - "Chat IA"
+        - "Brain"
+        - "OpenClaw"
+        - "Aider"
+        - "Claude Code"
+        - "Terminal web"
+        - "Gestión documental"
+        - "Trabajadores / RRHH"
+        - "Email"
+        - "Revo POS"
+        - "Biloop"
+        - "Docker stack"
+        - "Dashboard / UI"
+        - "API backend"
+        - "Infraestructura (PM2, Cloudflare, etc.)"
+        - "Nuevo componente"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: impact
+    attributes:
+      label: "Impacto estimado"
+      description: "¿A cuántos usuarios o flujos afecta?"
+      options:
+        - "🔴 Crítico — bloquea un flujo principal"
+        - "🟠 Alto — mejora significativa para uso diario"
+        - "🟡 Medio — mejora la experiencia pero hay alternativas"
+        - "🟢 Bajo — nice-to-have"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: willingness
+    attributes:
+      label: "¿Podrías implementarlo?"
+      description: "¿Estarías dispuesto/a a contribuir con un PR?"
+      options:
+        - "Sí, puedo hacer un PR"
+        - "Puedo ayudar pero necesito guía"
+        - "Solo propongo la idea"
+    validations:
+      required: true
+
+  - type: textarea
+    id: mockups
+    attributes:
+      label: "Mockups o referencias"
+      description: "Si tienes bocetos, capturas de pantalla de apps que lo hacen bien, o cualquier referencia visual, añádelos aquí."
+    validations:
+      required: false
+
+  - type: textarea
+    id: context
+    attributes:
+      label: "Contexto adicional"
+      description: "Cualquier otra información relevante."
+    validations:
+      required: false

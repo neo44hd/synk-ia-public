@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: "\U00002753 Preguntas"
+    url: https://github.com/neo44hd/synk-ia-public/discussions
+    about: "Para preguntas generales, usa Discussions en vez de abrir un issue."
+  - name: "\U0001F4D6 Documentación"
+    url: https://github.com/neo44hd/synk-ia-public/blob/main/README.md
+    about: "Consulta el README para instalación, configuración y troubleshooting."
+  - name: "\U0001F91D Contribuir"
+    url: https://github.com/neo44hd/synk-ia-public/blob/main/CONTRIBUTING.md
+    about: "Lee la guía de contribución antes de abrir un PR."
