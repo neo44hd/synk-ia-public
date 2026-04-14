@@ -1,0 +1,16 @@
+{
+  "language": "spanish",
+  "permissions": {
+    "allow": [
+      "Bash(*)",
+      "Read(*)",
+      "Write(*)",
+      "Edit(*)",
+      "Glob(*)",
+      "Grep(*)",
+      "WebFetch(*)",
+      "mcp__*"
+    ],
+    "deny": []
+  }
+}

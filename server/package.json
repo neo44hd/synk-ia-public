@@ -1,0 +1,24 @@
+{
+  "name": "synkia-backend",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js",
+    "download-model": "node ../scripts/download-model.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "imap": "^0.8.19",
+    "mailparser": "^3.7.1",
+    "node-llama-cpp": "^3.0.0",
+    "pdf-parse": "^1.1.1",
+    "puppeteer": "^22.0.0",
+    "multer": "^1.4.5-lts.1",
+    "adm-zip": "^0.5.16",
+    "ws": "^8.18.0",
+    "node-pty": "^1.0.0"
+  }
+}
