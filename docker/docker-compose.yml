@@ -84,7 +84,7 @@ services:
       - CHUNK_OVERLAP=150
 
       # ── Seguridad
-      - WEBUI_SECRET_KEY=sinkia-openwebui-2026
+      - WEBUI_SECRET_KEY=CHANGE_ME_WEBUI_SECRET
       - ENABLE_SIGNUP=true
       - DEFAULT_USER_ROLE=admin
 
@@ -117,7 +117,7 @@ services:
       - N8N_PORT=5678
       - N8N_PROTOCOL=http
       - WEBHOOK_URL=http://localhost:5678
-      - N8N_ENCRYPTION_KEY=sinkia-n8n-key-2026
+      - N8N_ENCRYPTION_KEY=CHANGE_ME_N8N_KEY
       - GENERIC_TIMEZONE=Europe/Madrid
       - N8N_LOG_LEVEL=warn
 
